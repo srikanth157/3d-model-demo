@@ -173,6 +173,14 @@ export function Avatar(props) {
     [idleAnimation[0], angryAnimation[0], greetingAnimation[0]],
     group
   );
+  useEffect(() => {
+    group.current.traverse((child) => {
+      if (child.isSkinnedMesh || child.isMesh) {
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+  }, []);
 
   useEffect(() => {
     actions[animation].reset().fadeIn(0.5).play();
@@ -189,6 +197,13 @@ export function Avatar(props) {
   return (
     <group {...props} dispose={null} ref={group}>
       <primitive object={nodes.Hips} />
+      <skinnedMesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Wolf3D_Body.geometry}
+        material={materials.Wolf3D_Body}
+        skeleton={nodes.Wolf3D_Body.skeleton}
+      />
       <skinnedMesh
         geometry={nodes.Wolf3D_Body.geometry}
         material={materials.Wolf3D_Body}
