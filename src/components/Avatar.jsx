@@ -186,6 +186,19 @@ export function Avatar(props) {
     actions[animation].reset().fadeIn(0.5).play();
     return () => actions[animation].fadeOut(0.5);
   }, [animation]);
+   // 👁 Eye look down blendshapes
+   const eyeDownWeight = 0.4;
+   ["eyeLookDown_L", "eyeLookDown_R"].forEach((eye) => {
+     const dict = nodes.Wolf3D_Head.morphTargetDictionary;
+     const infl = nodes.Wolf3D_Head.morphTargetInfluences;
+     if (dict[eye] !== undefined) {
+       infl[dict[eye]] = THREE.MathUtils.lerp(
+         infl[dict[eye]],
+         eyeDownWeight,
+         morphTargetSmoothing
+       );
+     }
+   });
 
   // CODE ADDED AFTER THE TUTORIAL (but learnt in the portfolio tutorial ♥️)
   useFrame((state) => {
@@ -193,6 +206,7 @@ export function Avatar(props) {
       group.current.getObjectByName("Head").lookAt(state.camera.position);
     }
   });
+
 
   return (
     <group {...props} dispose={null} ref={group}>
