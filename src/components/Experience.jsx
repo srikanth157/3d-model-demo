@@ -40,7 +40,7 @@ export const Experience = () => {
       />
 
       {/* Avatar Model */}
-      <Avatar position={[0, -3.5, 2]} scale={3.6} />
+      <Avatar position={[0, -3, 2]} scale={3} />
 
       {/* Curved Ground Plane */}
       <mesh position={[0, -1, 1]} receiveShadow>
@@ -50,7 +50,7 @@ export const Experience = () => {
 
       {/* Optional: Extra blurred shadow under feet */}
       <ContactShadows
-        position={[0, -2.1, 2]}
+        position={[0, -2.4, 2]}
         opacity={4}
         width={10}
         height={10}
