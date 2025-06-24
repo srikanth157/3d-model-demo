@@ -19,7 +19,7 @@ export const Experience = () => {
 
   return (
     <>
-      <OrbitControls />
+      <OrbitControls target={[0, 0,0]} />
       <Environment preset="sunset" />
 
       {/* Lighting */}
@@ -40,10 +40,10 @@ export const Experience = () => {
       />
 
       {/* Avatar Model */}
-      <Avatar position={[0, -3, 2]} scale={3.2} />
+      <Avatar position={[0, -2.5, 2]} scale={3} />
 
       {/* Curved Ground Plane */}
-      <mesh position={[0, -1, 1]} receiveShadow>
+      <mesh position={[0, -2, 1]} receiveShadow>
         <planeGeometry args={[28, 18]} />
         <shadowMaterial  opacity={0.1} />
       </mesh>
