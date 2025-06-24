@@ -187,7 +187,7 @@ export function Avatar(props) {
     return () => actions[animation].fadeOut(0.5);
   }, [animation]);
    // 👁 Eye look down blendshapes
-   const eyeDownWeight = 0.4;
+   const eyeDownWeight = 0;
    ["eyeLookDown_L", "eyeLookDown_R"].forEach((eye) => {
      const dict = nodes.Wolf3D_Head.morphTargetDictionary;
      const infl = nodes.Wolf3D_Head.morphTargetInfluences;
