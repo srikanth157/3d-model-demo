@@ -1,4 +1,4 @@
-import { Environment, OrbitControls } from "@react-three/drei";
+import { Environment, OrbitControls, ContactShadows } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { Avatar } from "./Avatar";
 import { useEffect } from "react";
@@ -8,10 +8,13 @@ export const Experience = () => {
   const viewport = useThree((state) => state.viewport);
   const gl = useThree((state) => state.gl);
 
-  // Enable shadows in WebGL renderer
+  // Enable shadows and tone mapping
   useEffect(() => {
     gl.shadowMap.enabled = true;
     gl.shadowMap.type = THREE.PCFSoftShadowMap;
+    gl.toneMapping = THREE.ACESFilmicToneMapping;
+    gl.outputEncoding = THREE.sRGBEncoding;
+    gl.toneMappingExposure = 0.9; // Slightly lower exposure for realism
   }, [gl]);
 
   return (
@@ -20,13 +23,15 @@ export const Experience = () => {
       <Environment preset="sunset" />
 
       {/* Lighting */}
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0} />
       <directionalLight
         castShadow
-        position={[5, 10, 5]}
-        intensity={1.5}
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        position={[1.5, 10, 23]}
+        intensity={1}
+        shadow-mapSize-width={1024} // lower map size for more blur
+        shadow-mapSize-height={1024}
+        shadow-radius={10}           // makes the shadow soft
+        shadow-bias={-0.0005}        // fixes shadow acne
         shadow-camera-far={50}
         shadow-camera-left={-10}
         shadow-camera-right={10}
@@ -34,18 +39,24 @@ export const Experience = () => {
         shadow-camera-bottom={-10}
       />
 
-      {/* Avatar Model (should cast shadow) */}
-      <Avatar  position={[0, -2, 2]} scale={2.8} />
+      {/* Avatar Model */}
+      <Avatar position={[0, -2, 2]} scale={2.8} />
 
-      {/* Ground Plane (receives shadow) */}
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -2, 2]}
-        receiveShadow
-      >
-        <planeGeometry args={[viewport.width * 3, viewport.height * 2 ]} />
-        <shadowMaterial opacity={0.3} />
+      {/* Curved Ground Plane */}
+      <mesh position={[0, -1, 1]} receiveShadow>
+        <planeGeometry args={[28, 18]} />
+        <shadowMaterial  opacity={0.1} />
       </mesh>
+
+      {/* Optional: Extra blurred shadow under feet */}
+      <ContactShadows
+        position={[0, -2.1, 2]}
+        opacity={4}
+        width={10}
+        height={10}
+        blur={2.5}
+        far={6}
+      />
     </>
   );
 };
