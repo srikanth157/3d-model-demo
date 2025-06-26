@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 export const Experience = () => {
-  const viewport = useThree((state) => state.viewport);
   const gl = useThree((state) => state.gl);
 
   // Enable shadows and tone mapping
@@ -14,24 +13,24 @@ export const Experience = () => {
     gl.shadowMap.type = THREE.PCFSoftShadowMap;
     gl.toneMapping = THREE.ACESFilmicToneMapping;
     gl.outputEncoding = THREE.sRGBEncoding;
-    gl.toneMappingExposure = 0.9; // Slightly lower exposure for realism
+    gl.toneMappingExposure = 0.9;
   }, [gl]);
 
   return (
     <>
-      <OrbitControls target={[0, 0,0]} />
+      <OrbitControls target={[0, 1, 0]} />
       <Environment preset="sunset" />
 
       {/* Lighting */}
       <ambientLight intensity={0} />
       <directionalLight
         castShadow
-        position={[1.5, 10, 23]}
+        position={[1.5, 1, 23]}
         intensity={1}
-        shadow-mapSize-width={1024} // lower map size for more blur
+        shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
-        shadow-radius={10}           // makes the shadow soft
-        shadow-bias={-0.0005}        // fixes shadow acne
+        shadow-radius={10}
+        shadow-bias={-0.0005}
         shadow-camera-far={50}
         shadow-camera-left={-10}
         shadow-camera-right={10}
@@ -39,19 +38,19 @@ export const Experience = () => {
         shadow-camera-bottom={-10}
       />
 
-      {/* Avatar Model */}
-      <Avatar position={[0, -2, 2]} scale={3.9} />
+      {/* Avatar Model (moved slightly down) */}
+      <Avatar position={[0, -2, 2]} scale={4.3} />
 
-      {/* Curved Ground Plane */}
+      {/* Ground Plane (closer to avatar's feet) */}
       <mesh position={[0, -2, 1]} receiveShadow>
-        <planeGeometry args={[28, 10]} />
-        <shadowMaterial  opacity={0.1} />
+        <planeGeometry args={[28, 18]} />
+        <shadowMaterial opacity={0.1} />
       </mesh>
 
-      {/* Optional: Extra blurred shadow under feet */}
+      {/* Contact Shadow (closer to new foot level) */}
       <ContactShadows
-        position={[0, -2.4, 2]}
-        opacity={4}
+        position={[0, -2.2, 2]}
+        opacity={0.4}
         width={10}
         height={10}
         blur={2.5}
