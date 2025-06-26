@@ -64,7 +64,7 @@ export function Avatar(props) {
 
       // 👆 Tilt the head slightly up
       if (child.name === "Head") {
-        child.rotation.x = THREE.MathUtils.degToRad(-10); // tilt head 10° up
+        child.rotation.x = THREE.MathUtils.degToRad(10); // tilt head 10° up
       }
     });
   }, []);
@@ -83,7 +83,7 @@ export function Avatar(props) {
     ] = 1;
     if (playAudio) {
       audio.play();
-      setAnimation(script === "welcome" ? "Greeting" : "Angry");
+      // setAnimation(script === "welcome" ? "Greeting" : "Angry");
     } else {
       setAnimation("Idle");
       audio.pause();
