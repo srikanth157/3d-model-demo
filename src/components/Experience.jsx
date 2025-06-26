@@ -39,7 +39,7 @@ export const Experience = () => {
       />
 
       {/* Avatar Model (moved slightly down) */}
-      <Avatar position={[0, -2, 2]} scale={4.3} />
+      <Avatar position={[0, -2, 2]} scale={4.2} />
 
       {/* Ground Plane (closer to avatar's feet) */}
       <mesh position={[0, -2, 1]} receiveShadow>
